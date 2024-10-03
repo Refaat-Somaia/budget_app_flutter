@@ -1,5 +1,6 @@
 import 'package:budget_app_flutter/components/chart.dart';
 import 'package:budget_app_flutter/databaseMethods.dart';
+import 'package:budget_app_flutter/pages/history.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -507,6 +508,48 @@ class _StatsState extends State<Stats> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Container(
+                        width: 85.w,
+                        height: 10.h,
+                        margin: EdgeInsets.only(top: 3.h),
+                        decoration: BoxDecoration(
+                            // color: secondary,
+                            border: Border.all(
+                                color: colorOfText.withOpacity(0.2), width: 2),
+                            borderRadius: BorderRadius.circular(32)),
+                        child: Center(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (_) => History()));
+                            },
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(32)))),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  setText("History", 12.sp, FontWeight.w500,
+                                      colorOfText),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
+                                  Icon(
+                                    FontAwesomeIcons.clockRotateLeft,
+                                    color: colorOfText,
+                                    size: 18.sp,
+                                  ),
+                                ]),
+                          ),
                         ),
                       ),
                       SizedBox(

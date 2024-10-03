@@ -109,6 +109,64 @@ Future<List<Budget>> getBudgets() async {
   ];
 }
 
+Future<Budget> getBudgetUsingId(String budgetId) async {
+  final db = await database;
+  final List<Map<String, Object?>> budgetsMap = await db.query(
+    'budgets',
+    where: 'id = ?',
+    whereArgs: [budgetId],
+  );
+  var list = [
+    for (final {
+          'id': id as String,
+          'name': name as String,
+          'maxAmount': maxAmount as double,
+          'isMonthly': isMonthly as int,
+          'iconIndex': iconIndex as int,
+          'colorIndex': colorIndex as int,
+        } in budgetsMap)
+      Budget(
+          id: id,
+          name: name,
+          maxAmount: maxAmount,
+          isMonthly: isMonthly,
+          iconIndex: iconIndex,
+          colorIndex: colorIndex),
+  ];
+  return list[0];
+}
+
+Future<List<Expense>> getAllExpenses() async {
+  // Get a reference to the database.
+  final db = await database;
+
+  // Query the table for all the dogs.
+  final List<Map<String, Object?>> expenseMap = await db.query('expenses');
+
+  // Convert the list of each dog's fields into a list of `Dog` objects.
+  return [
+    for (final {
+          'id': id as String,
+          'name': name as String,
+          'amount': amount as double,
+          'budgetId': budgetId as String,
+          'month': month as int,
+          'year': year as int,
+          'day': day as int,
+          'week': week as int,
+        } in expenseMap)
+      Expense(
+          id: id,
+          name: name,
+          week: week,
+          amount: amount,
+          month: month,
+          budgetId: budgetId,
+          year: year,
+          day: day),
+  ];
+}
+
 Future<int> getBudgetsCount() async {
   // Get a reference to the database.
   final db = await database;
@@ -140,24 +198,6 @@ Future<int> getBudgetsCount() async {
   });
   return x;
 }
-
-// Future<int> getOverBudgetsCount() async {
-//   // Get a reference to the database.
-//   final db = await database;
-
-//  List<Budget> budgets=await getBudgets();
-//  List<Expense> expneses;
-
-//   int x = 0;
-//   double x1=0;
-
-//   budgets.forEach((element) async{
-//     expneses=await getExpensesBudget(ele);
-//     if(element.maxAmount<)
-
-//   });
-//   return x;
-// }
 
 Future<List<Expense>> getExpensesBudget(String idOfBudget) async {
   // Get a reference to the database.

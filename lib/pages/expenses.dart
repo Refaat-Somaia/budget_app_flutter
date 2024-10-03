@@ -291,6 +291,9 @@ class _ExpnesesState extends State<Expneses> {
                             icon: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                SizedBox(
+                                  height: 5.7.h,
+                                ),
                                 setText(
                                     "Add", 10.sp, FontWeight.bold, colorOfText),
                                 Icon(
@@ -335,6 +338,9 @@ class _ExpnesesState extends State<Expneses> {
                             icon: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                SizedBox(
+                                  height: 5.7.h,
+                                ),
                                 setText("Save and reset", 11.sp,
                                     FontWeight.bold, Colors.white),
                                 SizedBox(
@@ -363,8 +369,8 @@ class _ExpnesesState extends State<Expneses> {
                           height: 2.h,
                         ),
                         for (int i = 0; i < listOfExpesnses.length; i++)
-                          ExpesnseContainer(
-                            expesnse: listOfExpesnses[i],
+                          expenseContainer(
+                            expense: listOfExpesnses[i],
                             budget: widget.budget,
                           ),
                         if (listOfExpesnses.isEmpty)

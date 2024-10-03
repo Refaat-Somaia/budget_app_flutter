@@ -11,17 +11,17 @@ import 'package:sizer/sizer.dart';
 
 import '../global.dart';
 
-class ExpesnseContainer extends StatefulWidget {
-  final Expense expesnse;
+class expenseContainer extends StatefulWidget {
+  final Expense expense;
   final Budget budget;
-  const ExpesnseContainer(
-      {super.key, required this.expesnse, required this.budget});
+  const expenseContainer(
+      {super.key, required this.expense, required this.budget});
 
   @override
-  State<ExpesnseContainer> createState() => _ExpesnseContainerState();
+  State<expenseContainer> createState() => _expenseContainerState();
 }
 
-class _ExpesnseContainerState extends State<ExpesnseContainer> {
+class _expenseContainerState extends State<expenseContainer> {
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
@@ -29,8 +29,8 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    nameController.text = widget.expesnse.name;
-    amountController.text = widget.expesnse.amount.toString();
+    nameController.text = widget.expense.name;
+    amountController.text = widget.expense.amount.toString();
   }
 
   @override
@@ -55,13 +55,31 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          setText(widget.expesnse.name, 11.sp, FontWeight.bold, colorOfText,
-              TextAlign.start),
+          SizedBox(
+            width: 90.w,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                setText(widget.expense.name, 11.sp, FontWeight.bold,
+                    colorOfText, TextAlign.start),
+                setText(
+                    widget.expense.year.toString() +
+                        "/" +
+                        widget.expense.month.toString() +
+                        "/" +
+                        widget.expense.day.toString(),
+                    9.sp,
+                    FontWeight.w500,
+                    colorOfText.withOpacity(0.5),
+                    TextAlign.start),
+              ],
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               setText(
-                  formatNumberWithCommas(widget.expesnse.amount),
+                  formatNumberWithCommas(widget.expense.amount),
                   11.sp,
                   FontWeight.w500,
                   colorOfText.withOpacity(0.7),
@@ -72,6 +90,10 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
                 size: 12.sp,
               )
             ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [],
           ),
           SizedBox(
             height: 3.h,
@@ -152,6 +174,8 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
                                               gradient: grad,
                                             ),
                                             child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                  padding: EdgeInsets.zero),
                                               onPressed: () async {
                                                 print(DateTime.now().weekday);
                                                 if (nameController
@@ -159,20 +183,19 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
                                                     amountController
                                                         .text.isNotEmpty) {
                                                   updateExpense(Expense(
-                                                      id: widget.expesnse.id,
+                                                      id: widget.expense.id,
                                                       budgetId: widget
-                                                          .expesnse.budgetId,
+                                                          .expense.budgetId,
                                                       name: nameController.text,
-                                                      week:
-                                                          widget.expesnse.week,
+                                                      week: widget.expense.week,
                                                       amount: double.parse(
                                                           amountController
                                                               .text),
-                                                      day: widget.expesnse.day,
+                                                      day: widget.expense.day,
                                                       month:
-                                                          widget.expesnse.month,
-                                                      year: widget
-                                                          .expesnse.year));
+                                                          widget.expense.month,
+                                                      year:
+                                                          widget.expense.year));
 
                                                   Navigator.pop(context);
                                                   nameController.clear();
@@ -231,9 +254,13 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
                     );
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       setText("Edit", 10.sp, FontWeight.w600, primaryBlue),
+                      SizedBox(
+                        width: 2.w,
+                        height: 5.5.h,
+                      ),
                       Icon(
                         FontAwesomeIcons.pen,
                         size: 5.w,
@@ -255,7 +282,7 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                   ),
                   onPressed: () {
-                    deleteExpense(widget.expesnse.id);
+                    deleteExpense(widget.expense.id);
                     Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
@@ -264,9 +291,13 @@ class _ExpesnseContainerState extends State<ExpesnseContainer> {
                                 )));
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       setText("Delete", 10.sp, FontWeight.w600, errorColor),
+                      SizedBox(
+                        width: 2.w,
+                        height: 5.5.h,
+                      ),
                       Icon(
                         FontAwesomeIcons.trashCan,
                         size: 5.w,

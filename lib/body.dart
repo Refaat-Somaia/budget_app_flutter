@@ -47,7 +47,7 @@ class _Body extends State<Body> {
     } else {
       setState(() {
         bodyColor = const Color(0xFFF5F5F5);
-        colorOfText = const Color.fromARGB(255, 41, 44, 50);
+        colorOfText = const Color.fromARGB(255, 39, 55, 74);
         secondary = const Color.fromARGB(255, 238, 238, 238);
       });
       prefs.setString('mode', 'light');
